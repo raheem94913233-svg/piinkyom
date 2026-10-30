@@ -20,7 +20,7 @@ if (typeof makeWASocket !== "function") {
 
 const PORT = process.env.PORT || 3000;
 const SERVICE_TOKEN = process.env.SERVICE_TOKEN || "change-me";
-const AUTH_DIR = process.env.AUTH_DIR || "/data/auth";
+const AUTH_DIR = process.env.AUTH_DIR || "./auth";
 
 if (SERVICE_TOKEN === "change-me") {
   console.error("SERVICE_TOKEN must be configured");
@@ -82,7 +82,7 @@ async function start() {
       connected = true;
       lastQr = "";
       startupError = "";
-      console.log("WhatsApp connected ✅");
+      console.log("WhatsApp connected \u2705");
     }
     if (connection === "close") {
       connected = false;
@@ -122,7 +122,7 @@ app.get("/status", auth, (_req, res) => {
     status: startupError ? "error" : connected ? "connected" : starting ? "starting" : "waiting",
     error: startupError || undefined,
     qr: lastQr || undefined,
-    persistentAuth: AUTH_DIR.startsWith("/data/"),
+    persistentAuth: AUTH_DIR.startsWith("/var/data/") || AUTH_DIR.startsWith("/data/"),
   });
 });
 

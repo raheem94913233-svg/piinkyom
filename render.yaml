@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: whatsapp-notifier
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: SERVICE_TOKEN
+        sync: false
+      - key: AUTH_DIR
+        value: /var/data/auth
+      - key: NODE_VERSION
+        value: "20"
+    disk:
+      name: wa-session
+      mountPath: /var/data
+      sizeGB: 1
